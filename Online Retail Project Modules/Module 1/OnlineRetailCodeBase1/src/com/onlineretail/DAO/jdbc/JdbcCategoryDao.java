@@ -47,8 +47,9 @@ public class JdbcCategoryDao implements CategoryDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
+			String query = "select * from category where status = 'y'";
 			result = stmt
-					.executeQuery("select * from category where status = 'y'");
+					.executeQuery(query);
 			List<Category> categories = new ArrayList<Category>();
 			Category category;
 			while (result.next()) {
@@ -120,9 +121,9 @@ public class JdbcCategoryDao implements CategoryDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
+			String query = "select count(*) from category where cid = "+ categoryId;
 			result = stmt
-					.executeQuery("select count(*) from category where cid = "
-							+ categoryId);
+					.executeQuery(query);
 			result.next();
 			status = result.getInt(1);
 			con.close();
@@ -143,9 +144,9 @@ public class JdbcCategoryDao implements CategoryDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
+			String query = "select count(*) from category where cname = '" + categoryName + "'";
 			result = stmt
-					.executeQuery("select count(*) from category where cname = '"
-							+ categoryName + "'");
+					.executeQuery(query);
 			result.next();
 			int count = result.getInt(1);
 			con.close();
@@ -223,9 +224,9 @@ public class JdbcCategoryDao implements CategoryDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
+			String query = "select count(*) from category where cname = '" + categoryName + "'";
 			result = stmt
-					.executeQuery("select count(*) from category where cname = '"
-							+ categoryName + "'");
+					.executeQuery(query);
 			result.next();
 			count = result.getInt(1);
 			con.close();

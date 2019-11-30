@@ -1,3 +1,20 @@
+
+DROP TABLE Category;
+DROP SEQUENCE Category_Seq;
+
+DROP TABLE SubCategory;
+DROP SEQUENCE Sub_Category_Seq;
+
+DROP TABLE Comments;
+DROP SEQUENCE Comment_Seq;
+
+DROP TABLE Product;
+DROP SEQUENCE Product_Seq;
+
+DROP TABLE Registration;
+DROP SEQUENCE Registration_Seq;
+
+
 create sequence Category_Seq start with 1
  increment by 1
  minvalue 1

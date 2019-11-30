@@ -1,6 +1,6 @@
 package com.onlineretail.model;
 
-public class Category {
+public class Category implements Comparable<Category> {
 
 	private int cid;
 	private String cname;
@@ -42,6 +42,13 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return cid + "\t" + cname + "\t\t" + description;
+	}
 
 	@Override
 	public int hashCode() {
@@ -66,6 +73,11 @@ public class Category {
 		} else if (!cname.equals(other.cname))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Category o) {
+		return this.getCname().compareTo(o.getCname());
 	}
 
 }

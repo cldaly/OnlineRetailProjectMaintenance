@@ -1,5 +1,6 @@
 package com.onlineretail.controller;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,13 +46,12 @@ public class CategoryController {
 	}
 
 	public void findAll() {
-		List<Category> catgeories = categoryService.findAll();
+		List<Category> categories = categoryService.findAll();
+		Collections.sort(categories);
 		System.out.println("ID \tName\t\tDescription");
-		for (Category category : catgeories) {
+		for (Category category : categories) {
 			if (category.getCname().length() > 0) {
-				System.out.print(category.getCid() + "\t");
-				System.out.print(category.getCname() + "\t\t");
-				System.out.println(category.getDescription());
+				System.out.println(category.toString());
 			}
 		}
 	}
@@ -64,9 +64,7 @@ public class CategoryController {
 		List<Category> categories = categoryService.findCategory(categoryName);
 		System.out.println("ID \tName\t\tDescription");
 		for (Category category : categories) {
-			System.out.print(category.getCid() + "\t");
-			System.out.print(category.getCname());
-			System.out.print("\t\t" + category.getDescription() + "\n");
+			System.out.println(category.toString());
 		}
 	}
 
