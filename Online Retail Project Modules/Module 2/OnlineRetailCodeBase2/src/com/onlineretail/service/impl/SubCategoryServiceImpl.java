@@ -18,7 +18,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 	public int AddSubCategory(String Name, String Description, int CategoryID) throws Exception 
 	{
 		if (isDuplicateSubCategoryName(Name) == false) {
-			SubCategory subCategory = null;
+			SubCategory subCategory = new SubCategory();
 			subCategory.setSubcname(Name);
 			subCategory.setSdescription(Description);
 			subCategory.setCid(CategoryID);
