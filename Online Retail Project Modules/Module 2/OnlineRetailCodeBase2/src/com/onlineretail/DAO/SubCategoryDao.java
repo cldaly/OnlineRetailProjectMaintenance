@@ -9,7 +9,7 @@ public interface SubCategoryDao {
 
 	List<SubCategory> findAll();
 
-	void updateSubCategory(SubCategory subcategory);
+//	void updateSubCategory(SubCategory subcategory);
 
 	void deleteSubCategory(int subcategoryId);
 

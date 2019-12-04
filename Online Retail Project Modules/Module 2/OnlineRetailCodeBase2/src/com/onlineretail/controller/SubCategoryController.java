@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.onlineretail.DAO.*;
 import com.onlineretail.DAO.jdbc.*;
+import com.onlineretail.exception.DuplicateSubCategoryException;
 import com.onlineretail.model.*;
 import com.onlineretail.service.*;
 import com.onlineretail.service.impl.*;
@@ -45,8 +46,8 @@ public class SubCategoryController {
 					result = "Sub Category Not Added";
 				}
 			}
-		} catch (Exception e) {
-			result = "Sub Category Not Added";
+		} catch (DuplicateSubCategoryException e) {
+			result = "Sub Category Name Already Exists";
 		}
 		return result;
 
@@ -54,13 +55,12 @@ public class SubCategoryController {
 
 	public void findAll() {
 		List<SubCategory> subcategories = subCategoryService.findAll();
-		System.out.println("ID \tName\t\tDescription\t\tCategory ID");
+		Collections.sort(subcategories);
+		System.out.println(String.format("%1$-6s", "ID") + String.format("%1$-20s","Name") 
+				+ String.format("%1$-30s","Description") + "Category ID");
 		for (SubCategory subcategory : subcategories) {
 			if (subcategory.getSubcname().length() > 0) {
-				System.out.print(subcategory.getSid() + "\t");
-				System.out.print(subcategory.getSubcname() + "\t\t");
-				System.out.print(subcategory.getSdescription() + "\t\t");
-				System.out.println(subcategory.getCid());
+				System.out.println(subcategory.toString());
 			}
 		}
 	}
@@ -72,12 +72,11 @@ public class SubCategoryController {
 	public void subCategoryNameDetails(String subCategoryName) {
 		List<SubCategory> subcategories = subCategoryService
 				.findSubCategory(subCategoryName);
-		System.out.println("ID \tName\t\tDescription\tCategory ID");
+		Collections.sort(subcategories);
+		System.out.println(String.format("%1$-6s", "ID") + String.format("%1$-20s","Name") 
+				+ String.format("%1$-30s","Description") + "Category ID");
 		for (SubCategory subcategory : subcategories) {
-			System.out.print(subcategory.getSid() + "\t");
-			System.out.print(subcategory.getSubcname() + "\t");
-			System.out.print(subcategory.getSdescription() + "\t\t");
-			System.out.print(subcategory.getCid() + "\n");
+			System.out.println(subcategory.toString());
 		}
 	}
 
@@ -91,6 +90,7 @@ public class SubCategoryController {
 		for (Category category : catgeories) {
 			if (category.getCname().length() > 0) {
 				System.out.print(category.getCid() + "\t");
+				System.out.print(category.getCname() + "\t\t");
 				System.out.println(category.getDescription());
 			}
 		}

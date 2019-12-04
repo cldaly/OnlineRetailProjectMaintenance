@@ -101,6 +101,7 @@ public class JdbcSubCategoryDao implements SubCategoryDao {
 		}
 	}
 
+	/*
 	@Override
 	public void updateSubCategory(SubCategory subcategory) {
 		Connection con = null;
@@ -120,6 +121,7 @@ public class JdbcSubCategoryDao implements SubCategoryDao {
 			cleanup(con, stmt, null);
 		}
 	}
+	*/
 
 	@Override
 	public void deleteSubCategory(int subcategoryId) {
@@ -127,12 +129,14 @@ public class JdbcSubCategoryDao implements SubCategoryDao {
 		PreparedStatement stmt = null;
 		try {
 			con = getMySqlConnection();
-			String query = "update subcategory set status = 'n' where sid = ";
+			String query = "update subcategory set status = 'n' where sid = ?";
 			stmt = con.prepareStatement(query);
 			stmt.setInt(1, subcategoryId);
+			stmt.execute();
 			con.close();
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
+			System.out.println(e.getMessage());
 			throw new RuntimeException("Sub Category Not Deleted");
 		} finally {
 			cleanup(con, stmt, null);
@@ -201,8 +205,9 @@ public class JdbcSubCategoryDao implements SubCategoryDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt.executeQuery("select count(*) from subcategory where subName = '"
-					+ subCategoryName + "'");
+			String query = "select count(*) from subcategory where subName = '"
+					+ subCategoryName + "'";
+			result = stmt.executeQuery(query);
 			result.next();
 			int count = result.getInt(1);
 			con.close();
@@ -259,9 +264,8 @@ public class JdbcSubCategoryDao implements SubCategoryDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt
-					.executeQuery("select count(*) from subcategory where subName = '"
-							+ subCategoryName + "'");
+			String query = "select count(*) from subcategory where subName = '" + subCategoryName + "'";
+			result = stmt.executeQuery(query);
 			result.next();
 			count = result.getInt(1);
 			con.close();
@@ -282,9 +286,8 @@ public class JdbcSubCategoryDao implements SubCategoryDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt
-					.executeQuery("select count(*) from category where cid = "
-							+ categoryId);
+			String query = "select count(*) from category where cid = " + categoryId;
+			result = stmt.executeQuery(query);
 			result.next();
 			status = result.getInt(1);
 			con.close();

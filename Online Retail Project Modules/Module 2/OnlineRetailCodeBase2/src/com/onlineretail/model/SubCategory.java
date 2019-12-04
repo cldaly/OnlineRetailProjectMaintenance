@@ -1,6 +1,6 @@
 package com.onlineretail.model;
 
-public class SubCategory {
+public class SubCategory implements Comparable<SubCategory> {
 
 	private int sid;
 	private int cid;
@@ -78,4 +78,13 @@ public class SubCategory {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%1$-6s", sid) + String.format("%1$-20s",subcname) + String.format("%1$-30s",sdescription) + cid;
+	}
+
+	@Override
+	public int compareTo(SubCategory o) {
+		return this.getSubcname().compareTo(o.getSubcname());
+	}
 }
