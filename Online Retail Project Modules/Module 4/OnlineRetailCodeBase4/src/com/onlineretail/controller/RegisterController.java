@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.sql.Date;
 
+import com.onlineretail.exception.DuplicateNameException;
 import com.onlineretail.model.Category;
 import com.onlineretail.model.Registration;
 import com.onlineretail.service.*;
@@ -49,8 +50,8 @@ public class RegisterController {
 			} else {
 				return "Registration Details Not Added";
 			}
-		} catch (Exception e) {
-			return "Registration Details Not Added";
+		} catch (DuplicateNameException e) {
+			return "User Name Already Exists";
 		}
 	}
 

@@ -2,7 +2,7 @@ package com.onlineretail.model;
 
 import java.util.Date;
 
-public class Comment {
+public class Comment implements Comparable<Comment> {
 	private int id;
 	private String categoryname;
 	private String comment;
@@ -88,4 +88,15 @@ public class Comment {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%1$-6s", id) + String.format("%1$-20s", categoryname) 
+			+ String.format("%1$-40s", comment) + String.format("%1$-16s", date) + rating;
+	}
+
+	@Override
+	public int compareTo(Comment o) {
+		return this.getCategoryname().compareTo(o.getCategoryname());
+	}
+	
 }

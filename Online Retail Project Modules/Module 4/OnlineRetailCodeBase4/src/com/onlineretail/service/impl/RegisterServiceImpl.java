@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.onlineretail.DAO.*;
 import com.onlineretail.DAO.jdbc.*;
+import com.onlineretail.exception.DuplicateNameException;
 import com.onlineretail.model.*;
 import com.onlineretail.service.*;
 
@@ -19,10 +20,10 @@ public class RegisterServiceImpl implements RegisterService {
 	@Override
 	public int AddRegister(String UserName, String Password, String PhNo,
 			String Gender, String City, String Country, Date regDate)
-			throws Exception {
+			throws DuplicateNameException {
 		if (isDuplicateUserName(UserName) == false) {
 
-			Registration register = null;
+			Registration register = new Registration();
 			register.setUsername(UserName);
 			register.setPassword(Password);
 			register.setPhnnumber(PhNo);
@@ -33,18 +34,18 @@ public class RegisterServiceImpl implements RegisterService {
 
 			return registerdao.Save(register);
 		} else {
-			throw new Exception("Registration Not Added");
+			throw new DuplicateNameException("User Name Already Exists");
 		}
 
 	}
 
 	@Override
-	public boolean isDuplicateUserName(String userName) throws Exception {
+	public boolean isDuplicateUserName(String userName) throws DuplicateNameException {
 		boolean status = false;
 		 if(registerdao.isDuplicateUserName(userName) == true)
 		 {	 
 			 status = true;
-			 throw new Exception("Registration Not Added");
+			 throw new DuplicateNameException("User Name Already Exists");
 		 }
 		 else
 			 status = false;

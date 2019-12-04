@@ -104,9 +104,10 @@ public class JdbcRegisterDao implements RegisterDao {
 		PreparedStatement stmt = null;
 		try {
 			con = getMySqlConnection();
-			String query = "update registration set status = 'n' where id = ";
+			String query = "update registration set status = 'n' where id = ?";
 			stmt = con.prepareStatement(query);
 			stmt.setInt(1, Id);
+			stmt.execute();
 			con.close();
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -123,9 +124,8 @@ public class JdbcRegisterDao implements RegisterDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt
-					.executeQuery("select count(*) from registration where username = '"
-							+ userName + "'");
+			String query = "select count(*) from registration where username = '" + userName + "'";
+			result = stmt.executeQuery(query);
 			result.next();
 			int count = result.getInt(1);
 			con.close();

@@ -57,7 +57,7 @@ public class CommentController {
 				}
 			}
 		} catch (Exception e) {
-			result = "Comment Not Added";
+			result = "Comment Not Added - Exception";
 		}
 		return result;
 
@@ -65,14 +65,13 @@ public class CommentController {
 
 	public void findAll() {
 		List<Comment> comments = commentService.findAllComments();
-		System.out
-				.println("ID \t Category Name\t\tComments \t\tComment Date\t\tRating");
+		Collections.sort(comments);
+		System.out.println(String.format("%1$-6s", "ID") + String.format("%1$-20s", "Category Name") 
+			+ String.format("%1$-30s", "Comments") + String.format("%1$-16s", "Comment Date") + "Rating");
+		
 		for (Comment comment : comments) {
 			if (comment.getComment().length() > 0) {
-				System.out.println(comment.getId() + "\t"
-						+ comment.getCategoryname() + "\t\t"
-						+ comment.getComment() + "\t\t" + comment.getDate()
-						+ "\t\t" + comment.getRating());
+				System.out.println(comment.toString());
 			}
 		}
 	}
@@ -83,12 +82,10 @@ public class CommentController {
 
 	public void CommentDetails(String categoryName) {
 		List<Comment> comments = commentService.findComment(categoryName);
-		System.out
-				.println("ID \t Category Name\t\tComments \t\tComment Date\t\tRating");
+		System.out.println(String.format("%1$-6s", "ID") + String.format("%1$-20s", "Category Name") 
+			+ String.format("%1$-40s", "Comments") + String.format("%1$-16s", "Comment Date") + "Rating");
 		for (Comment comment : comments) {
-			System.out.println(comment.getId() + "\t"
-					+ comment.getCategoryname() + "\t\t" + comment.getDate() 
-					+ "\t\t");
+			System.out.println(comment.toString());
 		}
 	}
 

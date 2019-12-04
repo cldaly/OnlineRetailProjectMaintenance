@@ -23,7 +23,7 @@ public class JdbcCommentDao implements CommentDao {
 		int cnt = 0;
 		try {
 			con = getMySqlConnection();
-			String query = "insert into comment(id,categoryname,comments,commentdate,rating)"
+			String query = "insert into comments(id,categoryname,comments,commentdate,rating)"
 					+ " values(Comment_seq.nextval,?,?,?,?)";
 			stmt = con.prepareStatement(query);
 			stmt.setString(1, comment.getCategoryname());
@@ -50,7 +50,7 @@ public class JdbcCommentDao implements CommentDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt.executeQuery("select * from comment where status = 'y'");
+			result = stmt.executeQuery("select * from comments where status = 'y'");
 			List<Comment> comments = new ArrayList<Comment>();
 			Comment comment;
 			while (result.next()) {
@@ -112,7 +112,7 @@ public class JdbcCommentDao implements CommentDao {
 		try {
 			con = getMySqlConnection();
 			stmt = con
-					.prepareStatement("select * from comment where CategoryName = ?");
+					.prepareStatement("select * from comments where CategoryName = ?");
 			stmt.setString(1, categoryName);
 			result = stmt.executeQuery();
 			List<Comment> comments = new ArrayList<Comment>();
@@ -147,9 +147,8 @@ public class JdbcCommentDao implements CommentDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt
-					.executeQuery("select count(*) from comment where CategoryName = '"
-							+ categoryName + "'");
+			String query = "select count(*) from comments where CategoryName = '" + categoryName + "'";
+			result = stmt.executeQuery(query);
 			result.next();
 			count = result.getInt(1);
 			con.close();
@@ -171,9 +170,8 @@ public class JdbcCommentDao implements CommentDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt
-					.executeQuery("select count(*) from category where cid = "
-							+ categoryId);
+			String query = "select count(*) from category where cid = " + categoryId;
+			result = stmt.executeQuery(query);
 			result.next();
 			status = result.getInt(1);
 			con.close();
