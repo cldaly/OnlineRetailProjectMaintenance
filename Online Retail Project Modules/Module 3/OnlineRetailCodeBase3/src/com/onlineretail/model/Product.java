@@ -1,6 +1,6 @@
 package com.onlineretail.model;
 
-public class Product {
+public class Product implements Comparable<Product> {
 
 	private int pid;
 	private int sid;
@@ -104,4 +104,16 @@ public class Product {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%1$-6s", pid) + String.format("%1$-20s", pname)
+		+ String.format("%1$-20s", pdescription) + String.format("%1$-10s", cost)
+		+ String.format("%1$-10s", discount) + String.format("%1$-18s", sid) + image;
+	}
+
+	@Override
+	public int compareTo(Product o) {
+		return this.getPname().compareTo(o.getPname());
+	}
+	
 }

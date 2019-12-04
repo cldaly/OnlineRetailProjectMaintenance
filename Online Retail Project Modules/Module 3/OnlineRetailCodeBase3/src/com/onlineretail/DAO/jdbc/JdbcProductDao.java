@@ -77,6 +77,7 @@ public class JdbcProductDao implements ProductDao {
 		}
 	}
 
+	/*
 	@Override
 	public void updateProduct(Product product) {
 		Connection con = null;
@@ -98,6 +99,7 @@ public class JdbcProductDao implements ProductDao {
 			cleanup(con, stmt, null);
 		}
 	}
+	*/
 
 	@Override
 	public void deleteProduct(int productId) {
@@ -107,7 +109,8 @@ public class JdbcProductDao implements ProductDao {
 			con = getMySqlConnection();
 			String query = "update product set status = 'n' where pid = ?";
 			stmt = con.prepareStatement(query);
-			stmt.executeUpdate();
+			stmt.setInt(1, productId);
+			stmt.execute();
 			con.close();
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -263,9 +266,8 @@ public class JdbcProductDao implements ProductDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt
-					.executeQuery("select count(*) from product where productName = '"
-							+ productName + "'");
+			String query = "select count(*) from product where productName = '" + productName + "'";
+			result = stmt.executeQuery(query);
 			result.next();
 			int count = result.getInt(1);
 			con.close();
@@ -325,9 +327,8 @@ public class JdbcProductDao implements ProductDao {
 		try {
 			con = getMySqlConnection();
 			stmt = (Statement) con.createStatement();
-			result = stmt
-					.executeQuery("select count(*) from product where productName = '"
-							+ productName + "'");
+			String query = "select count(*) from product where productName = '" + productName + "'";
+			result = stmt.executeQuery(query);
 			result.next();
 			count = result.getInt(1);
 			con.close();

@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.onlineretail.DAO.*;
 import com.onlineretail.DAO.jdbc.*;
+import com.onlineretail.exception.DuplicateProductException;
 import com.onlineretail.model.*;
 import com.onlineretail.service.*;
 import com.onlineretail.service.impl.*;
@@ -56,24 +57,22 @@ public class ProductController {
 					result = "Product Not Added";
 				}
 			}
-		} catch (Exception e) {
-			result = "Product Not Added";
+		} catch (DuplicateProductException e) {
+			result = "Product Name Already Exists";
 		}
 		return result;
 	}
 
 	public void findAll() {
 		List<Product> products = productService.findAll();
+		Collections.sort(products);
 		System.out
-				.println("ID \tName\t\tDescription\t\tPrice\t\tDiscount\t\tSub Category ID\t\tImage");
+			.println(String.format("%1$-6s", "ID") + String.format("%1$-20s", "Name")
+				+ String.format("%1$-20s", "Description") + String.format("%1$-10s", "Price")
+					+ String.format("%1$-10s", "Discount") + String.format("%1$-18s", "Sub Category ID") + "Image");
 		for (Product product : products) {
 			if (product.getPname().length() > 0) {
-				System.out.print(product.getPid() + "\t");
-				System.out.print(product.getPname() + "\t\t");
-				System.out.print(product.getPdescription() + "\t\t");
-				System.out.print(product.getCost() + "\t"
-						+ product.getDiscount() + "\t\t" + product.getImage()
-						+ "\t" + product.getSid() + "\n");
+				System.out.println(product.toString());
 			}
 		}
 	}
@@ -84,14 +83,12 @@ public class ProductController {
 	
 	public void ProductNameDetails(String productName) {
 			List<Product> products = productService.findProduct(productName);
-			System.out
-					.println("ID \tName\t\tDescription\tPrice\tDiscount\tImage\tSub Category ID");
+			System.out.println(String.format("%1$-6s", "ID") + String.format("%1$-20s", "Name")
+				+ String.format("%1$-20s", "Description") + String.format("%1$-10s", "Price")
+				+ String.format("%1$-10s", "Discount") + String.format("%1$-18s", "Sub Category ID") + "Image");
+			
 			for (Product product : products) {
-				System.out.print(product.getPid() + "\t");
-				System.out.print(product.getPdescription() + "\t\t");
-				System.out.print(product.getCost() + "\t"
-						+ product.getImage() + "\t\t" + product.getSid()
-						+ "\n");
+				System.out.println(product.toString());
 			}
 	}
 	
